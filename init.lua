@@ -204,6 +204,13 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Transparent background
+vim.api.nvim_create_autocmd('ColorScheme', {
+  pattern = '*',
+  callback = function()
+    vim.api.nvim_set_hl(0, 'Normal', { ctermbg = 'none' })
+  end,
+})
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -274,6 +281,14 @@ require('lazy').setup({
   --  config = function() ... end
 
   { -- Useful plugin to show you pending keybinds.
+    'github/copilot.vim',
+    { 'm4xshen/autoclose.nvim', opts = {} },
+    {
+      'kdheepak/lazygit.nvim',
+      config = function()
+        vim.keymap.set('n', '<leader>g', '<cmd>LazyGit<CR>', { noremap = true, silent = true })
+      end,
+    },
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     config = function() -- This is the function that runs, AFTER loading
